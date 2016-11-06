@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace SoapTest1
+namespace SDPExchange
 {
     [XmlRoot(ElementName = "Envelope", Namespace = Constants.NsSoapEnv)]
     public class CardPaymentResponseMessage

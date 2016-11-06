@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace SoapTest1
+namespace SDPExchange
 {
     class Program
     {
@@ -103,7 +103,7 @@ namespace SoapTest1
                             CardInformation = new CardInformation
                             {
                                 SessionId = sessionId,
-                                Tariffs = new Tariff[]
+                                Tariffs = new[]
                                 {
                                     new Tariff
                                     {
@@ -139,7 +139,7 @@ namespace SoapTest1
                                     UnaccountedResidueInfo = "При формировании суммы оплаты использована сумма остатка",
                                     UnaccountedResidueSum = 5000
                                 },
-                                WarningMessages = new string[]
+                                WarningMessages = new[]
                                 {
                                     "Какое-то предупреждение 1",
                                     "Еще какое-то предупреждение"
