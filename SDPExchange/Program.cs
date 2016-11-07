@@ -1,97 +1,138 @@
 ﻿using System;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SDPExchange
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private const string dummyVersion = "1";
+        private const string dummyAgentId = "5231";
+        private const string dummySalepointId = "1";
+        private const string dummySysNum = "123456890";
+        private const string dummyRegionId = "62";
+        private const string dummyDeviceId = "1234";
+
+        private const string dummyUser = "adminnimda";
+        private const string dummyPassword = "1q2w3e";
+
+        private const string dummySessionId = "02160329091126606000000000002345";
+        private const string dummyTariffId = "13";
+        private const int dummyPaymentSum = 10000;
+        private const string dummyPaymentInfo = "1234_465789";
+        private const string dummyIdPaymentInfo = "1A2B3C";
+
+        private const string dummyCheq = "Выполнено что-то там...";
+        private const int dummyFullSum = 20000;
+
+        public static WsSecurity security = Routines.CreateWsSecurity(dummyUser, dummyPassword);
+
+        public static CardInfoRequestMessage CardInfoRequestMessage;
+
+        public static CardPaymentRequestMessage CardPaymentRequestMessage;
+
+        public static CardPaymentResponseMessage CardPaymentResponseMessage;
+
+
+        public static CardInfoResponseMessage CardInfoResponseMessage;
+
+
+        private static void Main()
         {
-            string version = "1";
-            string agentId = "1234";
-            string salepointId = "1";
-            int sysNum = 1234567890;
-            int regionId = 62;
-            string deviceId = "1234";
+            FillDummies();
+            Routines.PrintAfterSerializeObject(typeof(CardInfoRequestMessage), CardInfoRequestMessage,
+                CardInfoRequestMessage?.Xmlns);
+            var reqCardInfo = (CardInfoRequestMessage) Routines.DeSerializeObject(typeof(CardInfoRequestMessage), "CardInfoRequest.xml");
+            if (reqCardInfo != null)
+                Routines.PrintAfterSerializeObject(typeof(CardInfoRequestMessage), reqCardInfo,
+                    reqCardInfo.Xmlns);
+            
+            Console.ReadLine();
+            /*
+            PrintAfterSerializeObject(typeof (CardInfoRequestMessage), cardInfoRequestMessage,
+                cardInfoRequestMessage.Xmlns);
+            PrintAfterSerializeObject(typeof (CardPaymentRequestMessage), cardPaymentRequestMessage,
+                cardPaymentRequestMessage.Xmlns);
+            PrintAfterSerializeObject(typeof (CardPaymentResponseMessage), cardPaymentResponseMessage,
+                cardPaymentResponseMessage.Xmlns);
+            PrintAfterSerializeObject(typeof (CardInfoResponseMessage), cardInfoResponseMessage,
+                cardInfoResponseMessage.Xmlns);
 
-            string user = "adminnimda";
-            string password = "1q2w3e";
+            WriteSerializedObject(typeof(CardInfoRequestMessage), cardInfoRequestMessage, "CardInfoRequest.xml",
+                cardInfoRequestMessage.Xmlns);
+            WriteSerializedObject(typeof(CardPaymentRequestMessage), cardPaymentRequestMessage, "CardPaymentRequest.xml",
+                cardPaymentRequestMessage.Xmlns);
+            WriteSerializedObject(typeof(CardPaymentResponseMessage), cardPaymentResponseMessage, "CardPaymentResponse.xml",
+                cardPaymentResponseMessage.Xmlns);
+            WriteSerializedObject(typeof(CardInfoResponseMessage), cardInfoResponseMessage, "CardInfoResponseMessage.xml",
+                cardInfoResponseMessage.Xmlns);
+                */
+        }
 
-            string sessionId = "02160329091126606000000000002345";
-            string tariffId = "13";
-            int paymentSum = 10000;
-            string paymentInfo = "1234_465789";
-            string idPaymentInfo = "1A2B3C";
-
-            string cheq = "Выполнено что-то там...";
-            int fullSum = 20000;
-
-            WsSecurity security = new WsSecurity { MustUnderstand = "0", UserNameToken = new UserNameToken { UserName = user, Password = new Password { Value = password } } };
-            var cardInfoRequestMessage = new CardInfoRequestMessage
+        private static void FillDummies()
+        {
+            try
             {
-                Header = new CardInfoRequestHeader {Security = security},
-                Body =
+                CardInfoRequestMessage = new CardInfoRequestMessage
+                {
+                    Header = new CardInfoRequestHeader { Security = security },
+                    Body = 
                     new CardInfoRequestBody
                     {
                         CardInfoRequest =
                             new CardInfoRequest
                             {
-                                AgentId = agentId,
-                                DeviceId = deviceId,
-                                RegionId = regionId,
-                                SalepointId = salepointId,
-                                SysNum = sysNum,
-                                Version = version
+                                AgentId = dummyAgentId,
+                                DeviceId = dummyDeviceId,
+                                RegionId = dummyRegionId,
+                                SalepointId = dummySalepointId,
+                                SysNum = dummySysNum,
+                                Version = dummyVersion
                             }
                     }
-            };
+                };
 
-            PrintAfterSerializeObject(typeof(CardInfoRequestMessage), cardInfoRequestMessage, cardInfoRequestMessage.Xmlns);
-
-            var cardPaymentRequestMessage = new CardPaymentRequestMessage
-            {
-                Header = new CardPaymentRequestHeader {Security = security},
-                Body = new CardPaymentRequestBody
+                CardPaymentRequestMessage = new CardPaymentRequestMessage
                 {
-                    CardPaymentRequest = 
+                    Header = new CardPaymentRequestHeader { Security = security },
+                    Body = new CardPaymentRequestBody
+                    {
+                        CardPaymentRequest =
                         new CardPaymentRequest
                         {
-                            AgentId = agentId,
-                            SalepointId = salepointId,
-                            Version = version,
-                            SessionId = sessionId,
-                            TariffId = tariffId,
-                            //В копейках
-                            PaymentSum = paymentSum,
-                            PaymentInfo = paymentInfo,
-                            IdPaymentInfo = idPaymentInfo
-                        }
-                }
-            };
-
-            PrintAfterSerializeObject(typeof(CardPaymentRequestMessage), cardPaymentRequestMessage, cardPaymentRequestMessage.Xmlns);
-
-            var cardPaymentResponseMessage = new CardPaymentResponseMessage
-            {
-                Header = "",
-                Body = new CardPaymentResponseBody
-                {
-                    CardPaymentResponse = new CardPaymentResponse
-                    {
-                        Result = new Result(),
-                        CardPaymentInformation = new CardPaymentInformation
-                        {
-                            SessionId = sessionId,
-                            Cheq = cheq,
-                            FullSum = fullSum
+                            AgentId = dummyAgentId,
+                            SalepointId = dummySalepointId,
+                            Version = dummyVersion,
+                            SessionId = dummySessionId,
+                            TariffId = dummyTariffId,
+                        //В копейках
+                        PaymentSum = dummyPaymentSum,
+                            PaymentInfo = dummyPaymentInfo,
+                            IdPaymentInfo = dummyIdPaymentInfo
                         }
                     }
-                }
-            };
-            PrintAfterSerializeObject(typeof(CardPaymentResponseMessage), cardPaymentResponseMessage, cardPaymentResponseMessage.Xmlns);
+                };
 
-            var cardInfoResponseMessage = 
+                CardPaymentResponseMessage = new CardPaymentResponseMessage
+                {
+                    Header = "",
+                    Body = new CardPaymentResponseBody
+                    {
+                        CardPaymentResponse = new CardPaymentResponse
+                        {
+                            Result = new Result(),
+                            CardPaymentInformation = new CardPaymentInformation
+                            {
+                                SessionId = dummySessionId,
+                                Cheq = dummyCheq,
+                                FullSum = dummyFullSum
+                            }
+                        }
+                    }
+                };
+
+                CardInfoResponseMessage =
                 new CardInfoResponseMessage
                 {
                     Header = "",
@@ -99,32 +140,32 @@ namespace SDPExchange
                     {
                         CardInfoResponse = new CardInfoResponse
                         {
-                            Result =  new Result(),
+                            Result = new Result(),
                             CardInformation = new CardInformation
                             {
-                                SessionId = sessionId,
+                                SessionId = dummySessionId,
                                 Tariffs = new[]
                                 {
-                                    new Tariff
-                                    {
-                                        Id = "11",
-                                        Otype = 1,
-                                        Text = "Льготный",
-                                        MinSumInt = 1500,
-                                        MaxSumInt = 1000000,
-                                        UnaccountedResidueInfo = "У вас есть какие то деньги..",
-                                        UnaccountedResidueSum = 1000
-                                    },
-                                    new Tariff
-                                    {
-                                        Id = "13",
-                                        Otype = 1,
-                                        Text = "НеЛьготный",
-                                        MinSumInt = 1000,
-                                        MaxSumInt = 1500000,
-                                        UnaccountedResidueInfo = "У вас есть какие то деньги",
-                                        UnaccountedResidueSum = 5000
-                                    }
+                                new Tariff
+                                {
+                                    Id = "11",
+                                    Otype = 1,
+                                    Text = "Льготный",
+                                    MinSumInt = 1500,
+                                    MaxSumInt = 1000000,
+                                    UnaccountedResidueInfo = "У вас есть какие то деньги..",
+                                    UnaccountedResidueSum = 1000
+                                },
+                                new Tariff
+                                {
+                                    Id = "13",
+                                    Otype = 1,
+                                    Text = "НеЛьготный",
+                                    MinSumInt = 1000,
+                                    MaxSumInt = 1500000,
+                                    UnaccountedResidueInfo = "У вас есть какие то деньги",
+                                    UnaccountedResidueSum = 5000
+                                }
                                 },
                                 Company = new Company
                                 {
@@ -141,33 +182,18 @@ namespace SDPExchange
                                 },
                                 WarningMessages = new[]
                                 {
-                                    "Какое-то предупреждение 1",
-                                    "Еще какое-то предупреждение"
+                                "Какое-то предупреждение 1",
+                                "Еще какое-то предупреждение"
                                 }
                             }
                         }
                     }
                 };
-            PrintAfterSerializeObject(typeof(CardInfoResponseMessage), cardInfoResponseMessage, cardInfoResponseMessage.Xmlns);
-
-            Console.ReadKey();
-        }
-
-        static void PrintAfterSerializeObject(Type type, object serialized, XmlSerializerNamespaces xmlns = null)
-        {
-            Console.WriteLine("\n*********************");
-            XmlSerializer xs = new XmlSerializer(type);
-            using (var ms = new MemoryStream())
-            {
-                StreamWriter myStreamWriter = new StreamWriter(ms);
-                if (xmlns != null)
-                    xs.Serialize(myStreamWriter, serialized, xmlns);
-                else
-                    xs.Serialize(myStreamWriter, serialized);
-                ms.Position = 0;
-                Console.Write(new StreamReader(ms).ReadToEnd());
             }
-            Console.WriteLine("\n*********************");
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
