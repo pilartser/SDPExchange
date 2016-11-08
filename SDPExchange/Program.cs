@@ -7,6 +7,12 @@ namespace SDPExchange
 {
     internal class Program
     {
+        private static readonly XmlSerializerNamespaces nsRequest =
+            new XmlSerializerNamespaces(new[]
+            {new XmlQualifiedName("ser", Constants.NsService), new XmlQualifiedName("soapenv", Constants.NsSoapEnv)});
+
+        private static readonly XmlSerializerNamespaces nsResponse = new XmlSerializerNamespaces(new [] { new XmlQualifiedName("SOAP-ENV", Constants.NsSoapEnv)});
+
         private const string dummyVersion = "1";
         private const string dummyAgentId = "5231";
         private const string dummySalepointId = "1";
@@ -28,37 +34,34 @@ namespace SDPExchange
 
         public static WsSecurity security = Routines.CreateWsSecurity(dummyUser, dummyPassword);
 
-        public static CardInfoRequestMessage CardInfoRequestMessage;
+        public static SoapMessage CardInfoRequestMessage;
 
-        public static CardPaymentRequestMessage CardPaymentRequestMessage;
+        public static SoapMessage CardPaymentRequestMessage;
 
-        public static CardPaymentResponseMessage CardPaymentResponseMessage;
+        public static SoapMessage CardPaymentResponseMessage;
 
 
-        public static CardInfoResponseMessage CardInfoResponseMessage;
+        public static SoapMessage CardInfoResponseMessage;
 
 
         private static void Main()
         {
             FillDummies();
-            Routines.PrintAfterSerializeObject(typeof(CardInfoRequestMessage), CardInfoRequestMessage,
+
+            /*Routines.PrintAfterSerializeObject(typeof(CardInfoRequestMessage), CardInfoRequestMessage,
                 CardInfoRequestMessage?.Xmlns);
             var reqCardInfo = (CardInfoRequestMessage) Routines.DeSerializeObject(typeof(CardInfoRequestMessage), "CardInfoRequest.xml");
             if (reqCardInfo != null)
                 Routines.PrintAfterSerializeObject(typeof(CardInfoRequestMessage), reqCardInfo,
                     reqCardInfo.Xmlns);
-            
-            Console.ReadLine();
-            /*
-            PrintAfterSerializeObject(typeof (CardInfoRequestMessage), cardInfoRequestMessage,
-                cardInfoRequestMessage.Xmlns);
-            PrintAfterSerializeObject(typeof (CardPaymentRequestMessage), cardPaymentRequestMessage,
-                cardPaymentRequestMessage.Xmlns);
-            PrintAfterSerializeObject(typeof (CardPaymentResponseMessage), cardPaymentResponseMessage,
-                cardPaymentResponseMessage.Xmlns);
-            PrintAfterSerializeObject(typeof (CardInfoResponseMessage), cardInfoResponseMessage,
-                cardInfoResponseMessage.Xmlns);
+            */
 
+
+            Routines.PrintAfterSerializeObject(typeof (SoapMessage), CardInfoRequestMessage, nsRequest);
+            Routines.PrintAfterSerializeObject(typeof (SoapMessage), CardPaymentRequestMessage, nsRequest);
+            Routines.PrintAfterSerializeObject(typeof(SoapMessage), CardPaymentResponseMessage, nsResponse);
+            Routines.PrintAfterSerializeObject(typeof (SoapMessage), CardInfoResponseMessage, nsResponse);
+            /*
             WriteSerializedObject(typeof(CardInfoRequestMessage), cardInfoRequestMessage, "CardInfoRequest.xml",
                 cardInfoRequestMessage.Xmlns);
             WriteSerializedObject(typeof(CardPaymentRequestMessage), cardPaymentRequestMessage, "CardPaymentRequest.xml",
@@ -68,58 +71,59 @@ namespace SDPExchange
             WriteSerializedObject(typeof(CardInfoResponseMessage), cardInfoResponseMessage, "CardInfoResponseMessage.xml",
                 cardInfoResponseMessage.Xmlns);
                 */
+            Console.ReadLine();
         }
 
         private static void FillDummies()
         {
             try
             {
-                CardInfoRequestMessage = new CardInfoRequestMessage
+                CardInfoRequestMessage = new SoapMessage
                 {
-                    Header = new CardInfoRequestHeader { Security = security },
-                    Body = 
-                    new CardInfoRequestBody
+                    Xmlns = nsRequest,
+                    Header = {Security = security},
+                    Body =
                     {
-                        CardInfoRequest =
-                            new CardInfoRequest
-                            {
-                                AgentId = dummyAgentId,
-                                DeviceId = dummyDeviceId,
-                                RegionId = dummyRegionId,
-                                SalepointId = dummySalepointId,
-                                SysNum = dummySysNum,
-                                Version = dummyVersion
-                            }
-                    }
-                };
-
-                CardPaymentRequestMessage = new CardPaymentRequestMessage
-                {
-                    Header = new CardPaymentRequestHeader { Security = security },
-                    Body = new CardPaymentRequestBody
-                    {
-                        CardPaymentRequest =
-                        new CardPaymentRequest
+                        Content = new CardInfoRequest
                         {
                             AgentId = dummyAgentId,
+                            DeviceId = dummyDeviceId,
+                            RegionId = dummyRegionId,
                             SalepointId = dummySalepointId,
-                            Version = dummyVersion,
-                            SessionId = dummySessionId,
-                            TariffId = dummyTariffId,
-                        //В копейках
-                        PaymentSum = dummyPaymentSum,
-                            PaymentInfo = dummyPaymentInfo,
-                            IdPaymentInfo = dummyIdPaymentInfo
+                            SysNum = dummySysNum,
+                            Version = dummyVersion
                         }
                     }
                 };
 
-                CardPaymentResponseMessage = new CardPaymentResponseMessage
+                CardPaymentRequestMessage = new SoapMessage()
                 {
-                    Header = "",
-                    Body = new CardPaymentResponseBody
+                    Xmlns = nsRequest,
+                    Header = {Security = security},
+                    Body =
                     {
-                        CardPaymentResponse = new CardPaymentResponse
+                        Content =
+                            new CardPaymentRequest
+                            {
+                                AgentId = dummyAgentId,
+                                SalepointId = dummySalepointId,
+                                Version = dummyVersion,
+                                SessionId = dummySessionId,
+                                TariffId = dummyTariffId,
+                                //В копейках
+                                PaymentSum = dummyPaymentSum,
+                                PaymentInfo = dummyPaymentInfo,
+                                IdPaymentInfo = dummyIdPaymentInfo
+                            }
+                    }
+                };
+
+                CardPaymentResponseMessage = new SoapMessage()
+                {
+                    Xmlns = nsResponse,
+                    Body = 
+                    {
+                        Content = new CardPaymentResponse
                         {
                             Result = new Result(),
                             CardPaymentInformation = new CardPaymentInformation
@@ -133,12 +137,12 @@ namespace SDPExchange
                 };
 
                 CardInfoResponseMessage =
-                new CardInfoResponseMessage
+                new SoapMessage()
                 {
-                    Header = "",
-                    Body = new CardInfoResponseBody
+                    Xmlns = nsResponse,
+                    Body = 
                     {
-                        CardInfoResponse = new CardInfoResponse
+                        Content = new CardInfoResponse
                         {
                             Result = new Result(),
                             CardInformation = new CardInformation

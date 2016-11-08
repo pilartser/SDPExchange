@@ -6,6 +6,11 @@ namespace SDPExchange
 {
     class Routines
     {
+        public static string GenerateErrorCaption(string field, object value, string reason)
+        {
+            return $"Ошибка установки значения поля {field}: \"{value}\". Причина: {reason}.";
+        }
+
         public static void PrintAfterSerializeObject(Type type, object serialized, XmlSerializerNamespaces xmlns = null)
         {
             if (serialized == null) return;

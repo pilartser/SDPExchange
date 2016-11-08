@@ -2,34 +2,8 @@
 
 namespace SDPExchange
 {
-    [XmlRoot(ElementName = "Envelope", Namespace = Constants.NsSoapEnv)]
-    public class CardPaymentResponseMessage
-    {
-        [XmlNamespaceDeclarations]
-        public XmlSerializerNamespaces Xmlns = new XmlSerializerNamespaces();
-
-        [XmlElement(ElementName = "Header", Namespace = Constants.NsSoapEnv)]
-        public string Header { get; set; }
-
-        [XmlElement(ElementName = "Body", Namespace = Constants.NsSoapEnv)]
-        public CardPaymentResponseBody
-            Body { get; set; }
-
-        public CardPaymentResponseMessage()
-        {
-            Xmlns.Add("SOAP-ENV", Constants.NsSoapEnv);
-        }
-    }
-
-    [XmlRoot(ElementName = "Body", Namespace = Constants.NsSoapEnv)]
-    public struct CardPaymentResponseBody
-    {
-        [XmlElement(ElementName = "CardPaymentResponse", Namespace = Constants.NsService)] public CardPaymentResponse
-            CardPaymentResponse;
-    }
-
     [XmlRoot(ElementName = "CardPaymentResponse", Namespace = Constants.NsService)]
-    public class CardPaymentResponse
+    public class CardPaymentResponse : SoapBodyContent
     {
         [XmlNamespaceDeclarations]
         public XmlSerializerNamespaces Xmlns = new XmlSerializerNamespaces();

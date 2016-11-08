@@ -2,40 +2,8 @@
 
 namespace SDPExchange
 {
-    [XmlRoot(ElementName = "Envelope", Namespace = Constants.NsSoapEnv)]
-    public class CardPaymentRequestMessage
-    {
-        [XmlNamespaceDeclarations]
-        public XmlSerializerNamespaces Xmlns = new XmlSerializerNamespaces();
-
-        [XmlElement(ElementName = "Header", Namespace = Constants.NsSoapEnv)]
-        public CardPaymentRequestHeader Header { get; set; }
-
-        [XmlElement(ElementName = "Body", Namespace = Constants.NsSoapEnv)]
-        public CardPaymentRequestBody Body { get; set; }
-
-        public CardPaymentRequestMessage()
-        {
-            Xmlns.Add("ser", Constants.NsService);
-            Xmlns.Add("soapenv", Constants.NsSoapEnv);
-        }
-    }
-
-    [XmlRoot(ElementName = "Header", Namespace = Constants.NsSoapEnv)]
-    public struct CardPaymentRequestHeader
-    {
-        [XmlElement(ElementName = "Security", Namespace = Constants.NsWsse)] public WsSecurity Security { get; set; }
-    }
-
-    [XmlRoot(ElementName = "Body", Namespace = Constants.NsSoapEnv)]
-    public struct CardPaymentRequestBody
-    {
-        [XmlElement(ElementName = "CardPaymentRequest", Namespace = Constants.NsService)]
-        public CardPaymentRequest CardPaymentRequest { get; set; }
-    }
-
     [XmlRoot(ElementName = "CardPaymentrequest", Namespace = Constants.NsService)]
-    public struct CardPaymentRequest
+    public class CardPaymentRequest: SoapBodyContent
     {
         [XmlElement(ElementName = "agentId", Namespace = Constants.NsService)]
         public string AgentId { get; set; }
