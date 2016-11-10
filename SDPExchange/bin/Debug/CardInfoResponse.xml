@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Header />
+  <SOAP-ENV:Body>
+    <ns2:CardInfoResponse xmlns:ns2="http://umarsh.ru/sdp/servicepojo">
+      <ns2:Result>
+        <ns2:resultCode>0</ns2:resultCode>
+      </ns2:Result>
+      <ns2:CardInformation>
+        <ns2:sessionId>02160329091126606000000000002345</ns2:sessionId>
+        <ns2:tariff>
+          <ns2:id>11</ns2:id>
+          <ns2:otype>2</ns2:otype>
+          <ns2:text></ns2:text>
+          <ns2:minSumInt>1500</ns2:minSumInt>
+          <ns2:maxSumInt>1000000</ns2:maxSumInt>
+          <ns2:unaccountedResidueInfo>У вас есть какие то деньги..</ns2:unaccountedResidueInfo>
+          <ns2:unaccountedResidueSum>1000</ns2:unaccountedResidueSum>
+        </ns2:tariff>
+        <ns2:tariff>
+          <ns2:id>13</ns2:id>
+          <ns2:otype>1</ns2:otype>
+          <ns2:text>НеЛьготный</ns2:text>
+          <ns2:minSumInt>1000</ns2:minSumInt>
+          <ns2:maxSumInt>1500000</ns2:maxSumInt>
+          <ns2:unaccountedResidueInfo>У вас есть какие то деньги</ns2:unaccountedResidueInfo>
+          <ns2:unaccountedResidueSum>5000</ns2:unaccountedResidueSum>
+        </ns2:tariff>
+        <ns2:company>
+          <ns2:name>Testing</ns2:name>
+          <ns2:address>Петровка,38</ns2:address>
+          <ns2:phone>(1)555-555</ns2:phone>
+        </ns2:company>
+        <ns2:info>
+          <ns2:otype>5</ns2:otype>
+          <ns2:text>Номер 00006060 серия 12 Season Unlimited Действует по 10.08.13</ns2:text>
+          <ns2:unaccountedResidueInfo>При формировании суммы оплаты использована сумма остатка</ns2:unaccountedResidueInfo>
+          <ns2:unaccountedResidueSum>5000</ns2:unaccountedResidueSum>
+        </ns2:info>
+        <ns2:warningMsg>Какое-то предупреждение 1</ns2:warningMsg>
+        <ns2:warningMsg>Еще какое-то предупреждение</ns2:warningMsg>
+      </ns2:CardInformation>
+    </ns2:CardInfoResponse>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

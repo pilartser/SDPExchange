@@ -3,7 +3,7 @@
 namespace SDPExchange
 {
     [XmlRoot(ElementName = "Envelope", Namespace = Constants.NsSoapEnv)]
-    public class SoapMessage
+    public class SoapEnvelope
     {
         [XmlNamespaceDeclarations]
         public XmlSerializerNamespaces Xmlns = new XmlSerializerNamespaces();
@@ -14,7 +14,7 @@ namespace SDPExchange
         [XmlElement(ElementName = "Body", Namespace = Constants.NsSoapEnv)]
         public SoapBody Body;
 
-        public SoapMessage()
+        public SoapEnvelope()
         {
             Header = new SoapHeader();
             Body = new SoapBody();
@@ -35,10 +35,10 @@ namespace SDPExchange
         [XmlElement(typeof(CardPaymentRequest), ElementName = "CardPaymentRequest", Namespace = Constants.NsService)]
         [XmlElement(typeof(CardInfoResponse), ElementName = "CardInfoResponse", Namespace = Constants.NsService)]
         [XmlElement(typeof(CardPaymentResponse), ElementName = "CardPaymentResponse", Namespace = Constants.NsService)]
-        public SoapBodyContent Content;
+        public SoapMessage Content;
     }
 
-    public abstract class SoapBodyContent
+    public abstract class SoapMessage
     {
     }
 }

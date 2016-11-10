@@ -3,7 +3,7 @@
 namespace SDPExchange
 {
     [XmlRoot(ElementName = "CardPaymentrequest", Namespace = Constants.NsService)]
-    public class CardPaymentRequest: SoapBodyContent
+    public class CardPaymentRequest: SoapMessage
     {
         [XmlElement(ElementName = "agentId", Namespace = Constants.NsService)]
         public string AgentId { get; set; }

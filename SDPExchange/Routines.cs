@@ -6,7 +6,7 @@ namespace SDPExchange
 {
     class Routines
     {
-        public static string GenerateErrorCaption(string field, object value, string reason)
+        public static string GenerateErrorCaption(string field, string reason, object value = null)
         {
             return $"Ошибка установки значения поля {field}: \"{value}\". Причина: {reason}.";
         }
@@ -28,6 +28,11 @@ namespace SDPExchange
                     ms.Position = 0;
                     Console.Write(new StreamReader(ms).ReadToEnd());
                 }
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e.Message);
+                if (e.InnerException != null) Console.WriteLine(e.InnerException.Message);
             }
             catch (Exception e)
             {

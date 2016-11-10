@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:ser="http://umarsh.ru/sdp/servicepojo" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header>
+    <wsse:Security soapenv:mustUnderstand="0" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+      <wsse:UserNameToken xmlns:wsu="...">
+        <wsse:UserName>adminnimda</wsse:UserName>
+        <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">1q2w3e</wsse:Password>
+      </wsse:UserNameToken>
+    </wsse:Security>
+  </soapenv:Header>
+  <soapenv:Body>
+    <ser:CardPaymentRequest>
+      <ser:agentId>1234</ser:agentId>
+      <ser:salepointId>1</ser:salepointId>
+      <ser:version>1</ser:version>
+      <ser:sessionId>02160329091126606000000000002345</ser:sessionId>
+      <ser:tariffId>13</ser:tariffId>
+      <ser:paymentSum>10000</ser:paymentSum>
+      <ser:paymentInfo>1234_465789</ser:paymentInfo>
+      <ser:IDPaymentInfo>1A2B3C</ser:IDPaymentInfo>
+    </ser:CardPaymentRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

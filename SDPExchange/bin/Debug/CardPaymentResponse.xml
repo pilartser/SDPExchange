@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Header />
+  <SOAP-ENV:Body>
+    <ns2:CardPaymentResponse xmlns:ns2="http://umarsh.ru/sdp/servicepojo">
+      <ns2:Result>
+        <ns2:resultCode>0</ns2:resultCode>
+      </ns2:Result>
+      <ns2:CardPaymentInformation>
+        <ns2:sessionId>02160329091126606000000000002345</ns2:sessionId>
+        <ns2:cheq>Выполнено что-то там...</ns2:cheq>
+        <ns2:fullSum>20000</ns2:fullSum>
+      </ns2:CardPaymentInformation>
+    </ns2:CardPaymentResponse>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

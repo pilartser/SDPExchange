@@ -3,7 +3,7 @@
 namespace SDPExchange
 {
     [XmlRoot(ElementName = "CardPaymentResponse", Namespace = Constants.NsService)]
-    public class CardPaymentResponse : SoapBodyContent
+    public class CardPaymentResponse : SoapMessage
     {
         [XmlNamespaceDeclarations]
         public XmlSerializerNamespaces Xmlns = new XmlSerializerNamespaces();

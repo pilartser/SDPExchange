@@ -3,12 +3,17 @@
 namespace SDPExchange
 {
     [XmlRoot(ElementName = "Result", Namespace = Constants.NsService)]
-    public class Result
+    public struct Result
     {
+        private string _resultCodeText;
+
         [XmlElement(ElementName = "resultCode", Namespace = Constants.NsService)]
         public int ResultCode { get; set; }
 
         [XmlElement(ElementName = "resultCodeText", Namespace = Constants.NsService)]
-        public string ResultCodeText { get; set; }
+        public string ResultCodeText {
+            get { return _resultCodeText ?? ""; }
+            set { _resultCodeText = value; }
+        }
     }
 }
